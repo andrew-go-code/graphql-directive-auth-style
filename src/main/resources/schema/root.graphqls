@@ -1,0 +1,14 @@
+directive @hasRole(roles: [String]!) on FIELD_DEFINITION | OBJECT
+directive @hasGroup(groups: [String!]) on FIELD_DEFINITION
+directive @hasResource(resources: [String!]) on FIELD_DEFINITION
+
+type Query {
+    dictionary: Dictionaries
+}
+
+type Dictionaries @hasRole(roles: ["usual_user", "graph_user"]) {
+    dictionaryOne: [String]
+    dictionaryTwo: [String] @hasRole(roles: ["not_existing_role"])
+    dictionarySpecial: [String] @hasGroup(groups: ["special_group"])
+    dictionaryOnlyForWeirdPersons: [String] @hasResource(resources: ["weird_resource"])
+}
